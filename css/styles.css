@@ -1447,3 +1447,61 @@ input.btn{
 .mini-stat-chip{
   margin-right: 6px;  /* ✅ chip tidak terlalu nempel kanan */
 }
+.grid-bg,
+.noise {
+  pointer-events: none !important;
+}
+.nav {
+  position: relative;
+  z-index: 25;
+}
+/* ✅ pastikan background ga nutup klik */
+.grid-bg,
+.noise{
+  pointer-events:none;
+}
+
+/* ✅ header selalu di atas */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:9999;
+}
+
+/* ✅ MOBILE NAV */
+.mobile-toggle{
+  display:none;
+}
+
+.mobile-drawer{
+  display:none;
+  padding:12px 0 18px;
+  border-top:1px solid var(--line);
+}
+
+.mobile-drawer.open{
+  display:block;
+}
+
+.mobile-drawer a{
+  display:block;
+  padding:12px 10px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+.mobile-drawer a:hover{
+  color:var(--text);
+}
+
+/* ✅ responsive */
+@media (max-width:840px){
+  .navlinks{
+    display:none;
+  }
+  .mobile-toggle{
+    display:flex;
+  }
+}

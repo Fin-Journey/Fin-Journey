@@ -826,6 +826,21 @@ function drawActivityChart(){
   ctx.fillStyle = "rgba(255,255,255,.6)";
   ctx.fillText("Aktivitas selesai", centerX, centerY + 16);
 }
+function setupMobileNav(){
+  const btn = document.getElementById("mobileBtn");
+  const drawer = document.getElementById("mobileDrawer");
+  if(!btn || !drawer) return;
+
+  btn.addEventListener("click", ()=>{
+    drawer.classList.toggle("open");
+  });
+
+  drawer.querySelectorAll("a").forEach(a=>{
+    a.addEventListener("click", ()=>{
+      drawer.classList.remove("open");
+    });
+  });
+}
 
 /* ===========================
    BOOT (HANYA SEKALI)
@@ -837,10 +852,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
   wireNumberFormatting();
   wireBudgetTool();
   wireSavingsTool();
-renderHistoryUI();
+  renderHistoryUI();
   refreshGamificationUI();
   updateModuleTOCStatus();
-
+  setupMobileNav();
   renderGreeting();
   if(!getUserName()) showNameModal();
   setTimeout(drawActivityChart, 150);
