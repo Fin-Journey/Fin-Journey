@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Progress | Fin.Journey</title>
   <meta name="description"
     content="Fin.Journey adalah platform edukasi literasi keuangan digital: modul fintech, keamanan, regulasi, simulasi & gamifikasi." />
@@ -17,47 +17,47 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
-  <!-- ✅ NAVBAR -->
- <header>
-  <div class="container">
-    <div class="nav">
-      <a class="brand" href="index.html" aria-label="Ke Beranda">
-        <img src="assets/logo.svg" alt="Fin.Journey logo"/>
-      </a>
+  <!-- ✅ NAVBAR (SAMA DENGAN PAGE LAIN) -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="home.html" aria-label="Ke Beranda">
+          <img src="assets/logo.svg" alt="Fin.Journey logo" />
+        </a>
 
-      <!-- DESKTOP NAV -->
-      <nav class="navlinks" aria-label="Navigasi utama">
-        <a data-nav href="index.html">Home</a>
-        <a data-nav href="modules.html">Modul</a>
-        <a data-nav href="tools.html">Simulasi & Tools</a>
-        <a data-nav href="gamification.html">Progress</a>
-        <a data-nav href="security.html">Keamanan & Pelaporan</a>
-        <a data-nav href="about.html">Tentang</a>
-        <a data-nav href="anggota.html">Team</a>
-        <a data-nav href="faq.html">FAQ</a>
-      </nav>
+        <!-- DESKTOP NAV -->
+        <nav class="navlinks" aria-label="Navigasi utama">
+          <a data-nav href="home.html">Home</a>
+          <a data-nav href="modules.html">Modul</a>
+          <a data-nav href="tools.html">Simulasi & Tools</a>
+          <a data-nav href="gamification.html">Progress</a>
+          <a data-nav href="security.html">Keamanan & Pelaporan</a>
+          <a data-nav href="about.html">Tentang</a>
+          <a data-nav href="anggota.html">Team</a>
+          <a data-nav href="faq.html">FAQ</a>
+        </nav>
 
-      <!-- MOBILE BUTTON -->
-      <div class="mobile-toggle">
-        <button id="mobileBtn" aria-label="Buka menu">☰ Menu</button>
+        <!-- MOBILE BUTTON -->
+        <div class="mobile-toggle">
+          <button id="mobileToggleBtn" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Buka menu">
+            ☰ Menu
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- ✅ INI YANG KAMU KURANG -->
-    <div id="mobileDrawer" class="mobile-drawer" aria-label="Menu mobile">
-      <a href="index.html">Home</a>
-      <a href="modules.html">Modul</a>
-      <a href="tools.html">Simulasi & Tools</a>
-      <a href="gamification.html">Progress</a>
-      <a href="security.html">Keamanan & Pelaporan</a>
-      <a href="about.html">Tentang</a>
-      <a href="anggota.html">Team</a>
-      <a href="faq.html">FAQ</a>
+    <!-- ✅ MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobileDrawer" aria-label="Menu mobile">
+      <a data-nav href="home.html">Home</a>
+      <a data-nav href="modules.html">Modul</a>
+      <a data-nav href="tools.html">Simulasi & Tools</a>
+      <a data-nav href="gamification.html">Progress</a>
+      <a data-nav href="security.html">Keamanan & Pelaporan</a>
+      <a data-nav href="about.html">Tentang</a>
+      <a data-nav href="anggota.html">Team</a>
+      <a data-nav href="faq.html">FAQ</a>
     </div>
-
-  </div>
-</header>
-
+  </header>
 
   <!-- ✅ MAIN -->
   <main class="section" style="padding-top:30px">
@@ -128,7 +128,8 @@
             <div id="progressMessage" class="notice" style="margin-top:12px"></div>
 
             <!-- ✅ Statement Pembaca -->
-            <div id="readerStatement" class="notice" style="margin-top:12px; border-left-color:rgba(0,230,118,.8); background:rgba(0,230,118,.08)"></div>
+            <div id="readerStatement" class="notice"
+              style="margin-top:12px; border-left-color:rgba(0,230,118,.8); background:rgba(0,230,118,.08)"></div>
           </div>
 
           <!-- ✅ ACTION -->
@@ -142,7 +143,7 @@
           </p>
         </div>
 
-        <!-- ✅ KANAN: INFO + IDE CONTENT -->
+        <!-- ✅ KANAN: INFO + REKOMENDASI -->
         <div class="card pad">
           <div class="badge">🏅 <strong>Info Badge</strong></div>
 
@@ -156,25 +157,23 @@
             <strong>Tip:</strong> Ulangi kuis untuk meningkatkan skor dan membuka badge.
           </div>
 
-          <!-- ✅ Isi kosong biar gak kosong banget -->
           <div class="card pad" style="margin-top:14px">
             <div class="badge">✨ <strong>Rekomendasi Belajar</strong></div>
-            <hr class="sep"/>
+            <hr class="sep" />
 
-<div class="badge">📊 <strong>Grafik Aktivitas</strong></div>
-<p class="small" style="margin-top:10px; opacity:.8">
-  Visual progress kamu berdasarkan modul dan kuis yang sudah diselesaikan.
-</p>
+            <div class="badge">📊 <strong>Grafik Aktivitas</strong></div>
+            <p class="small" style="margin-top:10px; opacity:.8">
+              Visual progress kamu berdasarkan modul dan kuis yang sudah diselesaikan.
+            </p>
 
-<div class="chart-wrap">
-  <canvas id="activityChart" width="240" height="240"></canvas>
+            <div class="chart-wrap">
+              <canvas id="activityChart" width="240" height="240"></canvas>
 
-  <div class="chart-legend">
-    <div><span class="dot mod"></span> Modul selesai</div>
-    <div><span class="dot quiz"></span> Kuis selesai</div>
-  </div>
-</div>
-
+              <div class="chart-legend">
+                <div><span class="dot mod"></span> Modul selesai</div>
+                <div><span class="dot quiz"></span> Kuis selesai</div>
+              </div>
+            </div>
 
             <ul class="small" style="margin-top:10px; padding-left:18px; line-height:1.7">
               <li>Ulangi kuis dengan skor rendah untuk naik level lebih cepat</li>
@@ -191,16 +190,15 @@
         <h2>Riwayat aktivitas</h2>
         <div class="card pad">
           <table class="table">
-          <thead>
-            <tr>
-              <th>Tipe</th>
-              <th>ID</th>
-              <th>Detail</th>
-            </tr>
-          </thead>
-          <tbody id="historyBody"></tbody>
-        </table>
-
+            <thead>
+              <tr>
+                <th>Tipe</th>
+                <th>ID</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
         </div>
       </section>
 
@@ -247,8 +245,22 @@
   <!-- ✅ TOAST -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  <!-- ✅ Scroll To Top Button -->
+  <div id="scrollProgress"></div>
+
+  <button id="backToTop" aria-label="Kembali ke atas">
+    <span class="arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+        <path d="M12 5l-5 5m5-5l5 5M12 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </span>
+    <span class="txt">Keatas</span>
+  </button>
+
   <!-- ✅ app.js -->
   <script src="js/app.js"></script>
 
 </body>
+
 </html>

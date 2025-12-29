@@ -131,6 +131,11 @@ header.nav-show{
 
 /* ============== MOBILE NAV ============== */
 .mobile-toggle{display:none}
+
+/* Hide mobile drawer/toggle on desktop by default */
+.mobile-toggle{display:none}
+.mobile-drawer{display:none}
+.mobile-drawer.open{display:none}
 @media (max-width: 840px){
   .navlinks{display:none}
   .mobile-toggle{display:inline-flex; gap:10px; align-items:center}
@@ -200,10 +205,50 @@ h1{
   line-height:1.7;
   margin:0 0 18px;
 }
-.section{padding:44px 0}
+.section{padding:0}
 .section h2{margin:0 0 10px; font-size:26px}
 .section p{color:var(--muted); line-height:1.7}
 .small{font-size:13px; color:var(--muted)}
+
+/* ============== FORM SPACING (TOOLS, MODUL, dll) ============== */
+form label.small{
+  display:block;
+  margin:10px 0 6px;
+  line-height:1.35;
+}
+
+form input.btn,
+form select.btn,
+form textarea.btn{
+  width:100%;
+  justify-content:flex-start;
+  min-height:48px;
+  padding:14px 16px;
+  font-size:15px;
+}
+
+form .cols-2 > div,
+form .cols-3 > div{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+form .cta-row{
+  margin-top:16px;
+  gap:12px;
+}
+
+form .cta-row .btn{
+  flex:1 1 220px;
+}
+
+ (max-width: 520px){
+  form .cta-row .btn{
+    width:100%;
+  }
+}
+
 
 /* ============== BUTTONS ============== */
 .cta-row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
@@ -242,7 +287,7 @@ h1{
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
-.card.pad{padding:18px}
+.card.pad{padding:16px}
 .badge{
   display:inline-flex;
   align-items:center;
@@ -256,7 +301,7 @@ h1{
   background: rgba(255,255,255,.02);
 }
 .badge strong{color:var(--text)}
-hr.sep{border:0; height:1px; background:var(--line); margin:18px 0}
+hr.sep{border:0; height:1px; background:var(--line); margin:14px 0}
 
 /* ============== GRID COLS ============== */
 .cols-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
@@ -329,30 +374,35 @@ hr.sep{border:0; height:1px; background:var(--line); margin:18px 0}
 /* ============== TOAST ============== */
 .toast{
   position: fixed;
-  top: 92px;  /* ✅ turun agar tidak menutupi navbar */
+  top: 92px;
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  z-index: 10000;
-
-  background: rgba(0,0,0,.75);
+  z-index: 60; /* ✅ jangan 10000 */
+  background: rgba(0, 0, 0, .75);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,.14);
+  border: 1px solid rgba(255, 255, 255, .14);
   color: #fff;
-
   padding: 12px 16px;
   border-radius: 14px;
   max-width: min(620px, 92vw);
   text-align: center;
-
   opacity: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   transition: .22s ease;
 }
 
 .toast.show{
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  pointer-events: none !important;
 }
+
+@media (max-width: 600px){
+  .toast{
+    top: auto;
+    bottom: 18px;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 
 
 
@@ -1447,61 +1497,750 @@ input.btn{
 .mini-stat-chip{
   margin-right: 6px;  /* ✅ chip tidak terlalu nempel kanan */
 }
-.grid-bg,
-.noise {
-  pointer-events: none !important;
-}
-.nav {
-  position: relative;
-  z-index: 25;
-}
-/* ✅ pastikan background ga nutup klik */
-.grid-bg,
-.noise{
-  pointer-events:none;
+
+.card {
+  background: rgba(20, 25, 35, 0.65);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
 }
 
-/* ✅ header selalu di atas */
+.pad {
+  padding: 18px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.small {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 14px;
+  color: #cfd7ff;
+}
+
+/* ====== VIDEO STYLE MIRIP GAMBAR ====== */
+.video-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;  /* ini penting */
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 12px 22px rgba(0,0,0,0.45);
+}
+
+.video-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.hint {
+  margin-top: 12px;
+  font-size: 13px;
+  opacity: 0.8;
+  color: #cfd7ff;
+}
+.video-wrap {
+  max-width: 920px;
+  margin: 0 auto;
+}
+.title-infografis{
+  text-align: center;
+  width: 100%;
+  margin: 20px auto;
+}
+.container{
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.grid{
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1.1fr 0.9fr; /* desktop: 2 kolom */
+  align-items: start;
+}
+
+/* tablet */
+@media (max-width: 900px){
+  .grid{
+    grid-template-columns: 1fr; /* jadi 1 kolom */
+  }
+}
+.video-wrap{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-wrap iframe{
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+h1, h2{
+  line-height: 1.2;
+}
+
+.title{
+  font-size: clamp(22px, 3vw, 40px); /* otomatis mengecil di HP */
+  text-align: center;
+  margin: 18px 0;
+}
+/* =========================================
+   ✅ NAVBAR SIZE FIX (SESUAI SCREENSHOT)
+   Tempel paling bawah CSS
+   ========================================= */
+
+/* header/navbar wrapper */
 header{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:9999;
+  padding: 0 !important;
 }
 
-/* ✅ MOBILE NAV */
-.mobile-toggle{
-  display:none;
+/* container di dalam header jangan nambah tinggi */
+header .container{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
-.mobile-drawer{
-  display:none;
-  padding:12px 0 18px;
-  border-top:1px solid var(--line);
+/* bar navbar (yang berisi logo + menu) */
+header .nav{
+  padding: 8px 0 !important;      /* tinggi pas */
+  min-height: 60px !important;    /* target tinggi navbar */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
 }
 
-.mobile-drawer.open{
+/* logo */
+header .brand img{
+  height: 28px !important;  /* ini yang paling penting buat tinggi */
+  width: auto !important;
+  display: block !important;
+}
+
+/* menu desktop */
+header .navlinks{
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+/* link menu */
+header .navlinks a{
+  font-size: 13.5px !important;
+  padding: 6px 10px !important;
+  line-height: 1 !important;
+  border-radius: 999px !important;
+}
+
+/* pill active (Home / Modul yang hijau) */
+header .navlinks a.active{
+  padding: 6px 14px !important;
+}
+
+/* supaya konten tidak ketutup header fixed */
+body{
+  padding-top: 70px !important; /* 60px navbar + jarak aman */
+}
+
+/* responsive biar tetap ramping */
+@media (max-width: 840px){
+  header .nav{
+    min-height: 56px !important;
+    padding: 6px 0 !important;
+  }
+  header .brand img{
+    height: 24px !important;
+  }
+}
+/* =========================================================
+   ✅ RESPONSIVE PATCH (tempel PALING BAWAH)
+   - Rapihin duplikasi & konflik
+   - Container + spacing fluid
+   - Navbar fixed lebih stabil
+   - Grid & card lebih enak di mobile
+   ========================================================= */
+
+/* ---------- 1) Container & spacing konsisten ---------- */
+:root{
+  --pad-x: clamp(14px, 3.2vw, 22px);
+  --pad-y: clamp(16px, 3.6vw, 26px);
+  --section-y: clamp(18px, 4vw, 44px);
+}
+
+.container{
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding-left: var(--pad-x) !important;
+  padding-right: var(--pad-x) !important;
+}
+
+/* Section: jangan terlalu lega di HP */
+.section{
+  padding: var(--section-y) 0 !important;
+}
+
+/* Card padding tetap nyaman */
+.card.pad,
+.pad{
+  padding: clamp(14px, 3.2vw, 18px) !important;
+}
+
+/* ---------- 2) Navbar fixed: tinggi stabil + body offset stabil ---------- */
+header{
+  padding: 0 !important;
+}
+
+header .container{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+header .nav{
+  padding: 8px 0 !important;
+  min-height: 60px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap: 14px !important;
+}
+
+header .brand img{
+  height: 28px !important;
+  width: auto !important;
+  display:block !important;
+}
+
+/* ✅ Body offset mengikuti navbar (60px) + aman */
+body{
+  padding-top: 70px !important;
+}
+
+/* ---------- 3) Grid hero & layout: tablet/HP lebih rapi ---------- */
+.hero{
+  padding: clamp(34px, 6vw, 64px) 0 clamp(24px, 4vw, 46px) !important;
+}
+
+.hero .wrap{
+  grid-template-columns: 1.1fr .9fr;
+  gap: clamp(14px, 3vw, 24px);
+}
+
+/* Grid umum yang kamu pakai */
+.grid{
+  display:grid;
+  gap: clamp(14px, 3vw, 18px) !important;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items:start;
+}
+
+/* ---------- 4) Mobile breakpoint utama ---------- */
+@media (max-width: 900px){
+  .hero .wrap{ grid-template-columns: 1fr !important; }
+  .grid{ grid-template-columns: 1fr !important; }
+  .cols-2{ grid-template-columns: 1fr !important; }
+  .cols-3{ grid-template-columns: 1fr !important; }
+
+  h1{ font-size: clamp(28px, 7vw, 42px) !important; }
+  .subtitle{ font-size: 15px !important; }
+}
+
+/* ---------- 5) Mobile navbar + drawer ---------- */
+@media (max-width: 840px){
+  header .nav{
+    min-height: 56px !important;
+    padding: 6px 0 !important;
+  }
+  header .brand img{
+    height: 24px !important;
+  }
+
+  /* drawer full width lebih nyaman */
+  .mobile-drawer{
+    padding: 10px 0 14px !important;
+  }
+  .mobile-drawer a{
+    padding: 12px 12px !important;
+    border-radius: 12px;
+  }
+}
+
+/* ---------- 6) Back-to-top: aman di HP (nggak nutup konten) ---------- */
+#backToTop{
+  bottom: 14px !important;
+  min-width: 110px !important;
+  height: 40px !important;
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+  z-index: 9997 !important;
+}
+
+/* perbaiki typo: display: blo -> block */
+#backToTop .arrow svg{
+  display: block !important;
+}
+
+/* ---------- 7) Video & infographic: tinggi aman di HP ---------- */
+.video-wrap{
+  max-width: 100% !important;
+  border-radius: 16px !important;
+}
+
+.infographic-img{
+  max-height: min(520px, 70vh) !important;
+}
+
+/* ---------- 8) Table: biar nggak overflow di HP ---------- */
+.table{
   display:block;
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 14px;
 }
 
-.mobile-drawer a{
-  display:block;
-  padding:12px 10px;
-  font-weight:700;
-  color:var(--muted);
+/* ---------- 9) Scroll padding (anchor) ikut navbar ---------- */
+html{
+  scroll-padding-top: 76px !important;
 }
 
-.mobile-drawer a:hover{
-  color:var(--text);
-}
-
-/* ✅ responsive */
-@media (max-width:840px){
-  .navlinks{
+/* ============== MOBILE NAV ============== */
+.mobile-toggle{display:none}
+@media (max-width: 840px){
+  .navlinks{display:none}
+  .mobile-toggle{display:inline-flex; gap:10px; align-items:center}
+  .mobile-toggle button{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:10px 12px;
+    cursor:pointer;
+  }
+  .mobile-drawer{
     display:none;
+    padding:12px 0 18px;
+    border-top:1px solid var(--line);
   }
-  .mobile-toggle{
-    display:flex;
+  .mobile-drawer.open{display:block}
+  .mobile-drawer a{
+    display:block;
+    padding:12px 10px;
+    color:var(--muted);
+    font-weight:700
   }
+  .mobile-drawer a:hover{color:var(--text)}
+}
+
+
+/* =========================================================
+   ✅ FINAL POLISH (Dec 2025)
+   - Spacing tidak dempet
+   - Typography rapi
+   - Mobile drawer lebih nyaman
+   ========================================================= */
+
+:root{
+  --space-1: 6px;
+  --space-2: 10px;
+  --space-3: 14px;
+  --space-4: 18px;
+  --space-5: 24px;
+}
+
+/* global rhythm */
+body{
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+h1,h2,h3{
+  letter-spacing: -0.2px;
+}
+
+p, ul, ol{
+  margin: 0;
+}
+
+.section .container > * + *{
+  margin-top: var(--space-4);
+}
+
+/* pill / highlight */
+.pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.86);
+  font-weight: 800;
+  font-size: 13px;
+  max-width: 100%;
+  box-shadow: 0 12px 34px rgba(0,0,0,.35);
+}
+
+/* list spacing */
+ul, ol{
+  padding-left: 18px;
+}
+li + li{
+  margin-top: 6px;
+}
+
+/* card spacing */
+.card.pad{
+  padding: clamp(14px, 3.2vw, 20px) !important;
+}
+
+/* hero spacing for small screens */
+@media (max-width: 560px){
+  .hero{ padding: 46px 0 28px; }
+  h1{ line-height: 1.07; }
+  .btn{ width: 100%; }
+  .cta-row{ gap: 10px; }
+}
+
+/* Mobile drawer: tampil seperti panel */
+@media (max-width: 840px){
+  .mobile-drawer{
+    margin: 10px var(--pad-x) 14px;
+    padding: 10px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(15,22,32,.72);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 60px rgba(0,0,0,.45);
+  }
+  .mobile-drawer a{
+    border-radius: 14px;
+    padding: 12px 12px;
+    border: 1px solid transparent;
+  }
+  .mobile-drawer a:hover{
+    border-color: rgba(255,255,255,.12);
+    background: rgba(255,255,255,.03);
+  }
+  .mobile-drawer a.active{
+    border-color: rgba(0,230,118,.35);
+    background: linear-gradient(90deg, rgba(0,230,118,.14), rgba(255,213,79,.08));
+    color: var(--text);
+  }
+}
+
+/* ============== FORM SPACING (TOOLS, MODUL, DLL) ============== */
+/* Biar label & input tidak mepet dan terlihat rapi di desktop maupun mobile */
+form label.small{
+  display:block;
+  margin:14px 0 8px;
+  line-height:1.35;
+}
+
+form input.btn,
+form select.btn,
+form textarea.btn{
+  width:100%;
+  justify-content:flex-start;
+  min-height:48px;
+  padding:14px 16px;
+  font-size:15px;
+}
+
+/* Kolom input di dalam form dibuat vertikal + ada jarak */
+form .cols-2 > div,
+form .cols-3 > div{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* Jarak antar blok dalam card tools */
+.card.pad form.section{
+  padding-top:16px !important;
+}
+
+/* CTA tombol jangan dempet; di layar kecil tetap rapi */
+.cta-row{
+  gap:14px;
+}
+
+@media (max-width: 560px){
+  .cta-row .btn{ width:100%; }
+}
+/* Kolom input di dalam grid agar ada jarak vertikal */
+form .cols-2 > div,
+form .cols-3 > div{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* Baris tombol otomatis rapi dan tidak nabrak */
+.cta-row{
+  gap:14px;
+}
+
+/* Di layar sempit, buat tombol full-width biar tidak berdempetan */
+@media (max-width: 520px){
+  .cta-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .cta-row .btn{
+    width:100%;
+  }
+}
+
+@media (max-width: 640px){
+  .cols-2{gap:12px}
+  .cols-3{gap:12px}
+  .section{padding:24px 0}
+  form label.small{margin:8px 0 6px}
+}
+
+
+/* ============== GLOBAL RHYTHM TUNING (v5) ============== */
+:root{
+  --section-pad: 24px;
+  --grid-gap: 12px;
+  --card-pad: 16px;
+  --field-gap: 8px;
+}
+/* apply vars */
+.section{padding: var(--section-pad) 0;}
+/* common grids */
+.grid, .grid-2, .grid-3, .cards, .cards-grid{
+  gap: var(--grid-gap);
+}
+/* card padding */
+.card, .panel, .module-card, .tool-card{
+  padding: var(--card-pad);
+}
+/* form spacing */
+form .row, .form-row, .cols-2, .cols-3{
+  gap: var(--grid-gap);
+}
+.field, .field > label, .field label{
+  display:block;
+}
+.field label{ margin-bottom: var(--field-gap); }
+.field input, .field select, .field textarea{
+  width:100%;
+}
+
+/* Ensure in-page navigation remains clickable on mobile */
+@media (max-width: 860px){
+  .toc-grid, .toc-item, .module-progress-wrap{
+    position: relative;
+    z-index: 3;
+    pointer-events: auto;
+  }
+}
+
+/* Mobile density */
+@media (max-width: 768px){
+  :root{
+    --section-pad: 20px;
+    --grid-gap: 12px;
+    --card-pad: 14px;
+    --field-gap: 8px;
+  }
+}
+
+
+/* ==== Density tweak (publish) ====
+   Reduce excessive spacing between "kotak" (cards/buttons/tiles) to match design reference. */
+.cta-row{gap:12px !important;}
+.grid{gap:12px !important;}
+.cols-2, .cols-3{gap:12px !important;}
+.toc-grid{gap:12px !important;}
+/* Common wrappers */
+.stack, .card-stack, .list, .card-list{gap:12px !important;}
+/* Ensure vertically-stacked buttons/cards are not too far apart */
+.btn + .btn{margin-top:0 !important;}
+
+/* ✅ khusus gamification: navbar tetap 1 baris */
+body[data-page="gamification"] header .nav{
+  flex-wrap: nowrap !important;      /* jangan turun baris */
+  align-items: center !important;
+}
+
+body[data-page="gamification"] header .brand{
+  flex: 0 0 auto !important;
+}
+
+body[data-page="gamification"] header .mobile-toggle{
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
+
+/* kalau brand/logo terlalu besar, biar tidak mendorong turun */
+body[data-page="gamification"] header .brand img{
+  height: 26px;                      /* sesuaikan (24–32) */
+  width: auto;
+  display: block;
+}
+
+/* tombol menu biar tidak makan tempat */
+body[data-page="gamification"] #mobileToggleBtn{
+  padding: 8px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+  line-height: 1;
+}
+/* ✅ cegah halaman melebar dan kepotong */
+html, body{
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ✅ semua elemen jangan lebih lebar dari layar */
+*{
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ gambar / canvas / iframe harus responsif */
+img, canvas, iframe, video{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ✅ tabel sering jadi penyebab overflow */
+.table{
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+@media (max-width: 860px){
+  .cols-2{
+    grid-template-columns: 1fr !important;
+  }
+}
+/* ✅ 1) Layout dasar: semua mengikuti lebar HP dan center */
+html, body{
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+/* ✅ container selalu center */
+.container{
+  width: 100%;
+  max-width: 1100px;        /* desktop tetap */
+  margin: 0 auto;           /* center */
+  padding-left: 16px;       /* padding HP */
+  padding-right: 16px;
+}
+
+/* ✅ 2) Grid layout jadi 1 kolom di HP */
+@media (max-width: 860px){
+  .cols-2{
+    grid-template-columns: 1fr !important;
+  }
+
+  .cols-3{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ✅ 3) Gambar, canvas, iframe jangan bikin overflow */
+img, canvas, iframe, video{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ✅ 4) Tabel jangan bikin halaman melebar */
+.table{
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* ✅ 5) KPI jangan maksa lebar di HP */
+@media (max-width: 520px){
+  .kpi{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .kpi > div{
+    width: 100%;
+  }
+}
+
+/* ✅ 6) Card tidak boleh melebar */
+.card{
+  max-width: 100%;
+}
+/* ✅ HEADER HARUS FULL WIDTH */
+header{
+  width: 100%;
+  max-width: 100%;
+  left: 0;
+  right: 0;
+}
+
+/* ✅ tapi isi header tetap pakai container */
+header .container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* =========================
+   ✅ FIX HEADER FULL-WIDTH
+   ========================= */
+header{
+  width: 100%;
+  left: 0;
+  right: 0;
+
+  /* ✅ ini bikin background header full layar */
+  background: rgba(0,0,0,.22);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* ✅ jangan sampai container/nav punya background kotak */
+header .container,
+header .nav{
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* ✅ pastikan container header tetap rapi di tengah */
+header .container{
+  max-width: 1100px; /* atau ukuran container kamu */
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }

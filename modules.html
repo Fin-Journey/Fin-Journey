@@ -3,67 +3,84 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modul | Fin.Journey</title>
-  <meta name="description" content="Fin.Journey adalah platform edukasi literasi keuangan digital: modul fintech, keamanan, regulasi, simulasi & gamifikasi."/>
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml"/>
+  <meta name="description"
+    content="Fin.Journey adalah platform edukasi literasi keuangan digital: modul fintech, keamanan, regulasi, simulasi & gamifikasi." />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/styles.css" />
 
   <style>
     /* ✅ penting: supaya background tidak menutup klik */
-    .grid-bg, .noise{ pointer-events:none; }
+    .grid-bg,
+    .noise {
+      pointer-events: none;
+    }
+
+    /* ✅ progress bar tidak boleh menutup tombol menu */
+    .module-progress-wrap {
+      pointer-events: none;
+    }
 
     /* ✅ smooth scroll + offset agar anchor gak ketutup navbar */
-    html{
-      scroll-behavior:smooth;
+    html {
+      scroll-behavior: smooth;
       scroll-padding-top: 96px;
     }
 
     /* ===== TOC ===== */
-    .toc-grid{
-      display:grid;
+    .toc-grid {
+      display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin-top: 12px;
     }
-    @media (max-width: 860px){
-      .toc-grid{ grid-template-columns: 1fr; }
+
+    @media (max-width: 860px) {
+      .toc-grid {
+        grid-template-columns: 1fr;
+      }
     }
-    .toc-item{
-      display:flex;
+
+    .toc-item {
+      display: flex;
       gap: 12px;
       align-items: center;
       padding: 14px 14px;
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.02);
+      background: rgba(255, 255, 255, .02);
       transition: .18s ease;
-      cursor:pointer;
-      position:relative;
-      z-index:2;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
     }
-    .toc-item:hover{
+
+    .toc-item:hover {
       transform: translateY(-2px);
-      border-color: rgba(0,230,118,.30);
-      background: linear-gradient(90deg, rgba(0,230,118,.10), rgba(255,213,79,.06));
+      border-color: rgba(0, 230, 118, .30);
+      background: linear-gradient(90deg, rgba(0, 230, 118, .10), rgba(255, 213, 79, .06));
     }
-    .toc-status{
+
+    .toc-status {
       width: 38px;
       height: 38px;
-      display:grid;
-      place-items:center;
+      display: grid;
+      place-items: center;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.02);
+      background: rgba(255, 255, 255, .02);
       font-size: 18px;
       flex-shrink: 0;
     }
-    .toc-title{
+
+    .toc-title {
       font-weight: 900;
       font-size: 15px;
       color: var(--text);
     }
-    .toc-sub{
+
+    .toc-sub {
       font-size: 13px;
       color: var(--muted);
       margin-top: 2px;
@@ -71,16 +88,17 @@
     }
 
     /* ✅ CTA bawah modul responsive */
-    .cta-actions{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
+    .cta-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
     }
-    @media(max-width:720px){
-      .cta-actions .btn{
-        width:100%;
-        justify-content:center;
+
+    @media(max-width:720px) {
+      .cta-actions .btn {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -90,50 +108,50 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
+  <!-- ✅ HEADER (FIXED) -->
   <header>
-  <div class="container">
-    <div class="nav">
-      <a class="brand" href="index.html" aria-label="Ke Beranda">
-        <img src="assets/logo.svg" alt="Fin.Journey logo"/>
-      </a>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="index.html" aria-label="Ke Beranda">
+          <img src="assets/logo.svg" alt="Fin.Journey logo" />
+        </a>
 
-      <!-- DESKTOP NAV -->
-      <nav class="navlinks" aria-label="Navigasi utama">
-        <a data-nav href="index.html">Home</a>
-        <a data-nav href="modules.html">Modul</a>
-        <a data-nav href="tools.html">Simulasi & Tools</a>
-        <a data-nav href="gamification.html">Progress</a>
-        <a data-nav href="security.html">Keamanan & Pelaporan</a>
-        <a data-nav href="about.html">Tentang</a>
-        <a data-nav href="anggota.html">Team</a>
-        <a data-nav href="faq.html">FAQ</a>
-      </nav>
+        <!-- DESKTOP NAV -->
+        <nav class="navlinks" aria-label="Navigasi utama">
+          <a data-nav href="index.html">Home</a>
+          <a data-nav href="modules.html">Modul</a>
+          <a data-nav href="tools.html">Simulasi & Tools</a>
+          <a data-nav href="gamification.html">Progress</a>
+          <a data-nav href="security.html">Keamanan & Pelaporan</a>
+          <a data-nav href="about.html">Tentang</a>
+          <a data-nav href="anggota.html">Team</a>
+          <a data-nav href="faq.html">FAQ</a>
+        </nav>
 
-      <!-- MOBILE BUTTON -->
-      <div class="mobile-toggle">
-        <button id="mobileBtn" aria-label="Buka menu">☰ Menu</button>
+        <!-- MOBILE BUTTON -->
+        <div class="mobile-toggle">
+          <button id="mobileToggleBtn" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Buka menu">☰ Menu</button>
+        </div>
       </div>
     </div>
 
-    <!-- ✅ INI YANG KAMU KURANG -->
-    <div id="mobileDrawer" class="mobile-drawer" aria-label="Menu mobile">
-      <a href="index.html">Home</a>
-      <a href="modules.html">Modul</a>
-      <a href="tools.html">Simulasi & Tools</a>
-      <a href="gamification.html">Progress</a>
-      <a href="security.html">Keamanan & Pelaporan</a>
-      <a href="about.html">Tentang</a>
-      <a href="anggota.html">Team</a>
-      <a href="faq.html">FAQ</a>
+    <!-- ✅ MOBILE DRAWER (dipindah ke header) -->
+    <div class="mobile-drawer" id="mobileDrawer" aria-label="Menu mobile">
+      <a data-nav href="index.html">Home</a>
+      <a data-nav href="modules.html">Modul</a>
+      <a data-nav href="tools.html">Simulasi & Tools</a>
+      <a data-nav href="gamification.html">Progress</a>
+      <a data-nav href="security.html">Keamanan & Pelaporan</a>
+      <a data-nav href="about.html">Tentang</a>
+      <a data-nav href="anggota.html">Team</a>
+      <a data-nav href="faq.html">FAQ</a>
     </div>
+  </header>
 
+  <!-- ✅ MODULE PROGRESS BAR -->
+  <div class="module-progress-wrap" aria-label="Progress membaca modul">
+    <div class="module-progress-bar" id="moduleProgressBar"></div>
   </div>
-</header>
-
-<!-- ✅ MODULE PROGRESS BAR -->
-<div class="module-progress-wrap" aria-label="Progress membaca modul">
-  <div class="module-progress-bar" id="moduleProgressBar"></div>
-</div>
 
   <main class="section" style="padding-top:30px">
     <div class="container">
@@ -222,18 +240,26 @@
           <div class="card pad">
             <div class="badge">🎥 <strong>Video Edukasi</strong></div>
             <p class="small">Placeholder video (kamu bisa ganti dengan link YouTube/Drive sekolah/kampus).</p>
-            <div style="aspect-ratio:16/9; border-radius:16px; overflow:hidden; border:1px solid var(--line); margin-top:10px">
-              <video controls preload="metadata" style="width:100%; height:100%; display:block; background:#000;">
-                <source src="assets/video/Vidio Edukasi.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
+
+            <div class="video-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/zHdMN-VSl2A"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
             </div>
+
             <p class="small" style="margin-top:10px">Jika video tidak dapat diputar (offline), kamu tetap bisa lanjut ke infografis dan kuis.</p>
           </div>
         </div>
 
         <div class="section">
-          <h2>Infografis interaktif: “Apa yang berubah karena FinTech?”</h2>
+          <h2 class="title-infografis">
+            Infografis interaktif: "Apa yang berubah karena FinTech?"
+          </h2>
+
           <div class="infographic-wrapper" aria-label="Infografis interaktif">
             <div class="infographic-card">
               <img src="assets/image/Infografis edukasi.png" alt="Infografis Teknologi" class="infographic-img" />
@@ -526,7 +552,7 @@
             <p class="small">Pusat pelaporan dan penyelesaian pengaduan transaksi keuangan (IASC OJK):</p>
             <a class="btn primary" href="https://iasc.ojk.go.id/" target="_blank" rel="noopener">Buka iasc.ojk.go.id →</a>
 
-            <hr class="sep"/>
+            <hr class="sep" />
             <div class="notice">
               <strong>Ringkas:</strong> Kumpulkan bukti (screenshot, kronologi, rekening/nomor tujuan), lalu lakukan pelaporan melalui kanal resmi.
             </div>
@@ -595,7 +621,9 @@
             </div>
             <div style="min-width:160px">
               <div class="small">Kemajuan level</div>
-              <div class="progress" style="margin-top:8px"><div id="levelBar"></div></div>
+              <div class="progress" style="margin-top:8px">
+                <div id="levelBar"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -604,30 +632,41 @@
     </div>
   </footer>
 
+  <!-- ✅ Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- ✅ app.js dulu -->
-  <script src="js/app.js"></script>
+  <!-- ✅ Modal Input Nama -->
+  <div id="nameModal" class="name-modal" aria-hidden="true">
+    <div class="name-modal-box">
+      <h3>👋 Halo!</h3>
+      <p>Sebelum mulai, tulis nama panggilanmu ya 😊</p>
 
+      <input id="nameInput" placeholder="Contoh: Rizki / Aji / Bro" />
+
+      <button id="saveNameBtn" class="btn primary">Mulai Belajar 🚀</button>
+
+      <div class="name-modal-note">
+        (Nama ini bebas, bisa samaran, dan tersimpan di perangkat kamu)
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Scroll To Top Button -->
+  <div id="scrollProgress"></div>
+
+  <button id="backToTop" aria-label="Kembali ke atas">
+    <span class="arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+        <path d="M12 5l-5 5m5-5l5 5M12 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </span>
+    <span class="txt">Keatas</span>
+  </button>
+
+  <!-- ✅ simulasi select modul 2 -->
   <script>
-    /* ✅ status toc update */
-    function updateModuleTOCStatus(){
-      const s = (typeof loadState === "function") ? loadState() : null;
-      if(!s) return;
-
-      const map = ["fintech","types","security","regulation"];
-      map.forEach(id=>{
-        const el = document.getElementById("status-"+id);
-        if(!el) return;
-        el.textContent = s.reads?.[id] ? "✅" : "⏳";
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-      /* ✅ update status toc pertama kali */
-      updateModuleTOCStatus();
-
-      /* ✅ simulasi modul 2 */
+    document.addEventListener("DOMContentLoaded", () => {
       const tips = {
         pay: ["Aktifkan PIN/biometrik", "Jangan bagikan OTP", "Cek merchant/QR", "Batasi saldo untuk harian"],
         p2p: ["Cek legalitas & izin", "Pahami bunga/biaya & tenor", "Hindari akses kontak berlebihan", "Waspadai penagihan tidak etis"],
@@ -635,52 +674,27 @@
         crowd: ["Baca skema imbal hasil/risiko", "Verifikasi penyelenggara", "Cek transparansi proyek", "Jangan tergiur janji pasti"],
         other: ["Pahami produk & biaya", "Cek kebijakan data", "Gunakan MFA", "Baca syarat & ketentuan"]
       };
+
       const sel = document.getElementById("typePick");
       const out = document.getElementById("typeOut");
-      function render(){
-        if(!sel || !out) return;
-        const k = sel.value;
-        out.innerHTML = "<strong>Cek cepat:</strong><ul style='margin:8px 0 0; padding-left:18px'>" +
-          tips[k].map(t=>"<li class='small'>"+t+"</li>").join("") + "</ul>";
-      }
-      if(sel) sel.addEventListener("change", render);
-      render();
 
-      /* ✅ wire quiz */
-      wireQuiz("fintechQuiz","fintech_quiz",{q1:"b", q2:"a", q3:"a", q4:"b"});
-      wireQuiz("typesQuiz","types_quiz",{q1:"b", q2:"a", q3:"a", q4:"a"});
-      wireQuiz("securityQuiz","security_quiz",{q1:"b", q2:"a", q3:"a", q4:"b"});
-      wireQuiz("regulationQuiz","regulation_quiz",{q1:"a", q2:"a", q3:"b", q4:"a"});
+      function render() {
+        if (!sel || !out) return;
+        const k = sel.value;
+        out.innerHTML =
+          "<strong>Cek cepat:</strong><ul style='margin:8px 0 0; padding-left:18px'>" +
+          tips[k].map(t => "<li class='small'>" + t + "</li>").join("") +
+          "</ul>";
+      }
+
+      if (sel) sel.addEventListener("change", render);
+      render();
     });
   </script>
-<div id="scrollProgress"></div>
 
-<button id="backToTop" aria-label="Kembali ke atas">
-  <span class="arrow" aria-hidden="true">
-    <!-- ✅ SVG panah putih, tidak bulet, lonjong horizontal -->
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-      <path d="M12 5l-5 5m5-5l5 5M12 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </span>
-  <span class="txt">Keatas</span>
-</button>
+  <!-- ✅ app.js hanya 1x -->
+  <script src="js/app.js"></script>
 
-<!-- ✅ Modal Input Nama -->
-<div id="nameModal" class="name-modal" aria-hidden="true">
-  <div class="name-modal-box">
-    <h3>👋 Halo!</h3>
-    <p>Sebelum mulai, tulis nama panggilanmu ya 😊</p>
-
-    <input id="nameInput" placeholder="Contoh: Rizki / Aji / Bro" />
-
-    <button id="saveNameBtn" class="btn primary">Mulai Belajar 🚀</button>
-
-    <div class="name-modal-note">
-      (Nama ini bebas, bisa samaran, dan tersimpan di perangkat kamu)
-    </div>
-  </div>
-</div>
-
-<script src="js/app.js"></script>
 </body>
+
 </html>

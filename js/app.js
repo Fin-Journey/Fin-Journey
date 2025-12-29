@@ -826,21 +826,179 @@ function drawActivityChart(){
   ctx.fillStyle = "rgba(255,255,255,.6)";
   ctx.fillText("Aktivitas selesai", centerX, centerY + 16);
 }
+
+
+/* =========================================================
+   ✅ RESPONSIVE PATCH: NAV AUTO HIDE + MOBILE DRAWER + SCROLL PERF
+   Tempel di app.js (boleh paling bawah sebelum BOOT)
+   ========================================================= */
+
+
+function setupNavbarAutoHide(){
+  const header = document.querySelector("header");
+  if(!header) return;
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  function onScroll(){
+    const currentY = window.scrollY;
+    const diff = currentY - lastScrollY;
+
+    // show when scroll up / hide when scroll down
+    if(currentY < 40){
+      header.classList.remove("nav-hide");
+      header.classList.add("nav-show");
+    }else if(diff > 8){
+      header.classList.add("nav-hide");
+      header.classList.remove("nav-show");
+    }else if(diff < -8){
+      header.classList.remove("nav-hide");
+      header.classList.add("nav-show");
+    }
+
+    lastScrollY = currentY;
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", ()=>{
+    if(!ticking){
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, {passive:true});
+}
+
+/* ✅ Toast UI lebih jelas (warna & ikon) */
+function toast(msg, type="info"){
+  const el = document.getElementById("toast");
+  if(!el) return;
+
+  const map = {
+    info:    "ℹ️",
+    warn:    "⚠️",
+    success: "✅",
+    points:  "🪙",
+    error:   "❌"
+  };
+  const icon = map[type] || "ℹ️";
+
+  el.textContent = `${icon} ${msg}`;
+  el.classList.add("show");
+
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=> el.classList.remove("show"), 2600);
+}
+
+/* ✅ Scroll progress + BackToTop lebih smooth & hemat */
+function setupScrollProgressAndTopBtn(){
+  const bar = document.getElementById("scrollProgress");
+  const btn = document.getElementById("backToTop");
+  if(!bar || !btn) return;
+
+  let ticking = false;
+
+  const update = ()=>{
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    bar.style.width = pct + "%";
+
+    if(scrollTop > 260){
+      btn.classList.add("show");
+    }else{
+      btn.classList.remove("show");
+    }
+
+    ticking = false;
+  };
+
+  window.addEventListener("scroll", ()=>{
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, {passive:true});
+
+  btn.addEventListener("click", ()=>{
+    window.scrollTo({ top:0, behavior:"smooth" });
+  });
+
+  update();
+}
+/* ===========================
+   MOBILE NAV
+   - Drawer menu rapi di HP
+   =========================== */
 function setupMobileNav(){
-  const btn = document.getElementById("mobileBtn");
+  const btn = document.getElementById("mobileToggleBtn");
   const drawer = document.getElementById("mobileDrawer");
   if(!btn || !drawer) return;
 
-  btn.addEventListener("click", ()=>{
+  function setExpanded(val){
+    btn.setAttribute("aria-expanded", val ? "true" : "false");
+  }
+
+  btn.addEventListener("click", (e)=> {
+    e.stopPropagation();
     drawer.classList.toggle("open");
+    setExpanded(drawer.classList.contains("open"));
   });
 
+  // Auto close after clicking a link
   drawer.querySelectorAll("a").forEach(a=>{
     a.addEventListener("click", ()=>{
       drawer.classList.remove("open");
+      setExpanded(false);
     });
   });
+
+  // Click outside closes drawer
+  document.addEventListener("click", (e)=>{
+    if(!drawer.classList.contains("open")) return;
+    const inside = drawer.contains(e.target) || btn.contains(e.target);
+    if(!inside){
+      drawer.classList.remove("open");
+      setExpanded(false);
+    }
+  });
 }
+
+
+/* ===========================
+   ANCHOR SCROLL (OFFSET HEADER)
+   - Fix: TOC / navigasi modul di mobile kadang terasa "tidak jalan"
+   =========================== */
+function setupAnchorOffset(){
+  const header = document.querySelector("header");
+  const getOffset = ()=> (header ? header.offsetHeight : 0) + 10;
+
+  // handle only in-page anchors
+  document.addEventListener("click", (e)=>{
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+
+    const href = a.getAttribute("href") || "";
+    if(href === "#" || href.length < 2) return;
+
+    const id = href.slice(1);
+    const target = document.getElementById(id);
+    if(!target) return;
+
+    // allow default for cases where user wants copy link in new tab etc.
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    e.preventDefault();
+
+    const top = target.getBoundingClientRect().top + window.pageYOffset - getOffset();
+    window.scrollTo({ top, behavior: "smooth" });
+
+    // update hash without jumping
+    history.replaceState(null, "", href);
+  }, { passive: false });
+}
+
 
 /* ===========================
    BOOT (HANYA SEKALI)
@@ -848,14 +1006,18 @@ function setupMobileNav(){
 document.addEventListener("DOMContentLoaded", ()=>{
   setActiveNav();
   setupScrollProgressAndTopBtn();
+  setupMobileNav();
+  setupNavbarAutoHide();
+  setupAnchorOffset();
+  
   drawActivityChart();
   wireNumberFormatting();
   wireBudgetTool();
   wireSavingsTool();
-  renderHistoryUI();
+renderHistoryUI();
   refreshGamificationUI();
   updateModuleTOCStatus();
-  setupMobileNav();
+
   renderGreeting();
   if(!getUserName()) showNameModal();
   setTimeout(drawActivityChart, 150);
